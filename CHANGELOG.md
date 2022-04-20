@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 
 ### :rocket: (Enhancement)
 
+<<<<<<< HEAD
 * feat(ConsoleSpanExporter): export span links [#2917](https://github.com/open-telemetry/opentelemetry-js/pull/2917) @trentm
 
 ### :bug: (Bug Fix)
@@ -21,6 +22,9 @@ All notable changes to this project will be documented in this file.
 ### :boom: Breaking Change
 
 ### :rocket: (Enhancement)
+=======
+* feat: warn when hooked module is already loaded [#2926](https://github.com/open-telemetry/opentelemetry-js/pull/2926) @nozik
+>>>>>>> dc87a894 (warn when hooked module is already loaded)
 
 ### :bug: (Bug Fix)
 
