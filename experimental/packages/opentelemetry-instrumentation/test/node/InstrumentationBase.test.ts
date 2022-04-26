@@ -33,6 +33,35 @@ class TestInstrumentation extends InstrumentationBase {
 }
 
 describe('InstrumentationBase', () => {
+  describe('warn when module was already loaded', () => {
+    const MODULE_PATH = 'fake_path';
+    let instrumentation: TestInstrumentation;
+    let stub: sinon.SinonStub;
+
+    before(() => {
+      instrumentation = new TestInstrumentation();
+      stub = sinon.stub(require, 'resolve');
+      stub.withArgs(MODULE_NAME).returns(MODULE_PATH);
+    });
+
+    after(() => {
+      stub.restore();
+    });
+
+    it('should log a warning when module was already loaded', () => {
+      instrumentation = new TestInstrumentation();
+      instrumentation.disable()
+      // @ts-ignore
+      const diagStub = sinon.stub(instrumentation._diag, 'warn');
+      instrumentation.enable();
+      assert.strictEqual(diagStub.callCount, 0);
+      require.cache[MODULE_PATH] = {} as any;
+      instrumentation.disable();
+      instrumentation.enable();
+      assert.strictEqual(diagStub.callCount, 1);
+    });
+  });
+
   describe('_onRequire - module version is not available', () => {
     // For all of these cases, there is no indication of the actual module version,
     // so we require there to be a wildcard supported version.

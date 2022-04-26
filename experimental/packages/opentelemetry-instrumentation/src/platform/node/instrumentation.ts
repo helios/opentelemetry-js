@@ -63,11 +63,15 @@ export abstract class InstrumentationBase<T = any>
 
   private _warnOnPreloadedModules(): void {
     const preloadedModules: string[] = [];
+    console.log('_warnOnPreloadedModules')
     this._modules.forEach((module: InstrumentationModuleDefinition<T>) => {
       const { name } = module;
+      console.log('name: ' + name)
       try {
         const resolvedModule = require.resolve(name);
+        console.log('resolvedModule: ' + resolvedModule)
         if (require.cache[resolvedModule]) {
+          console.log('here');
           // Module is already cached, which means the instrumentation hook might not work
           preloadedModules.push(name);
         }
